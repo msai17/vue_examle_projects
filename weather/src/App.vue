@@ -8,7 +8,8 @@ export default {
   data() {
     return {
       city: "",
-      error: ""
+      error: "",
+      info: null
     }
   },
   computed: {
@@ -23,7 +24,8 @@ export default {
         return false;
       }
       
-      axios.get()
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}=metrics&appid=ab65444dec29e2bd823475284b602c42`)
+      .then(res => (this.info = res))
     }
   }
 }
@@ -37,6 +39,7 @@ export default {
     <input type="text" v-model="city" placeholder="Введите город">
     <button v-show="city.length > 0 " @click="getApiData()" >Получить погоду</button>
     <p class="error" v-if="getApiData() == false" >{{ error }}</p>
+    <p v-show="info != null">{{ info }}</p>
   </div>
 </template>
 
