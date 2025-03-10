@@ -1,9 +1,6 @@
 <script>
 import { computed } from 'vue';
 import axios from 'axios';
-
-
-
 export default {
   data() {
     return {
@@ -15,7 +12,20 @@ export default {
   computed: {
     cityName() {
       return "«" +this.city + "»"
+    },
+    showTemp() {
+      return "Температура: " + this.info.main.temp
+    },
+    showFeelLike() {
+      return "Ощущается как: " + this.info.main.feels_like
+    },
+    showMinTemp() {
+      return "Минимальная температура: " + this.info.main.temp_min
+    },
+    showMaxTemp() {
+      return "Минимальная температура: " + this.info.main.temp_max
     }
+
   },
   methods: {
     getApiData() {
@@ -41,7 +51,12 @@ export default {
     <input type="text" v-model="city" placeholder="Введите город">
     <button v-show="city.length > 0 " @click="getApiData()" >Получить погоду</button>
     <p class="error" v-if="getApiData() == false" >{{ error }}</p>
-    <p v-if="info != null">{{ info.main.temp }}</p>
+    <div v-if="info != null">
+      <p>{{ showTemp}}</p>
+      <p>{{ showFeelLike}}</p>
+      <p>{{ showMinTemp}}</p>
+      <p>{{ showMaxTemp}}</p>
+    </div>
   </div>
 </template>
 
